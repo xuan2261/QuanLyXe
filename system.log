@@ -702,3 +702,429 @@
 2025-01-02 21:17:29,060 - local_storage - INFO - Fetched all local vehicles.
 2025-01-02 21:17:30,373 - local_storage - INFO - MongoDB is connected.
 2025-01-02 21:17:30,373 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:07,906 - local_storage - INFO - Database initialized successfully.
+2025-01-03 10:03:10,105 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:10,106 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:10,463 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:10,464 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:15,727 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:15,728 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:18,263 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:18,264 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:19,208 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:19,209 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:19,605 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 10:03:20,166 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:20,168 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:25,312 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:25,313 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:32,300 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:32,302 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:36,430 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:36,431 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:38,346 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:38,347 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:46,143 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:46,144 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:03:46,711 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:03:46,712 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:06,980 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:06,981 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:08,041 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:08,041 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:08,273 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:08,274 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:35,417 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:35,417 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:35,636 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:35,637 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:41,588 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:41,589 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:43,378 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:43,379 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:45,046 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:45,046 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:46,246 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:46,248 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:46,343 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:46,345 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:46,722 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 10:06:47,304 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:47,305 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:47,457 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:47,459 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:06:50,599 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:06:50,599 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:09:41,539 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:09:41,541 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:10:05,483 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:10:05,484 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:10:28,520 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:10:28,522 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:17:31,243 - local_storage - INFO - Database initialized successfully.
+2025-01-03 10:17:33,763 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:17:33,763 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:17:34,084 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:17:34,085 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:17:38,176 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:17:38,177 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:17:45,884 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:17:45,885 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:18,816 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:18,816 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:20,207 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:20,215 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:20,481 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:20,482 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:23,155 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:23,156 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:23,366 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:23,367 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:28,860 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:28,861 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:30,362 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:30,363 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:31,247 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:31,248 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:31,637 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 10:18:32,177 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:32,181 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:32,709 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:32,710 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:34,739 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:34,740 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:53,768 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:53,770 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:55,206 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:55,207 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:55,435 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:55,436 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:58,527 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:58,527 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:18:58,731 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:18:58,732 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:00,350 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:00,353 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:00,452 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:00,453 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:00,838 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 10:19:01,344 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:01,345 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:01,889 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:01,935 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:05,116 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:05,117 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:12,414 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:12,415 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:29,948 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:29,949 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:30,884 - modules.payment - ERROR - Thanh toán th\u1ea5t b\u1ea1i - Th\u1ebb không t\u1ed3n t\u1ea1i: 
+2025-01-03 10:19:47,973 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:47,974 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:48,386 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:48,387 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:19:51,041 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:19:51,041 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:20:05,314 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:20:05,315 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:20:05,658 - modules.booking - ERROR - L\u1ed7i: module 'streamlit' has no attribute 'experimental_rerun'
+2025-01-03 10:20:35,371 - local_storage - INFO - Database initialized successfully.
+2025-01-03 10:20:37,077 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:20:37,079 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:20:38,159 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:20:38,160 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:20:38,811 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:20:38,813 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:21:14,350 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:21:14,352 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:21:14,868 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:21:14,869 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:26:00,283 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:26:00,284 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:26:00,755 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:26:00,756 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:26:04,265 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:26:04,267 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:21,769 - local_storage - INFO - Database initialized successfully.
+2025-01-03 10:52:23,302 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:23,303 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:23,729 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:23,730 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:27,755 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:27,756 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:34,783 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:34,784 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:35,273 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:35,274 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:40,262 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:40,264 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:40,782 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:40,783 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:52:53,321 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:52:53,323 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:54:01,122 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:54:01,124 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:54:02,011 - modules.payment - INFO - Thanh toán thành công: 1111222233334444 - S\u1ed1 d\u01b0 m\u1edbi: 1499840.0
+2025-01-03 10:54:02,011 - modules.payment - INFO - C\u1eadp nh\u1eadt tr\u1ea1ng thái thanh toán cho booking_id: 67775f1d09071f7434f9c90a thành paid
+2025-01-03 10:54:02,112 - modules.payment - INFO - C\u1eadp nh\u1eadt thành công.
+2025-01-03 10:54:02,113 - modules.payment - INFO - Tr\u1ea1ng thái thanh toán c\u1ee7a \u0111\u01a1n hàng 67775f1d09071f7434f9c90a \u0111ã \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt thành công.
+2025-01-03 10:54:04,298 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:54:04,300 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:54:20,707 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:54:20,708 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:54:21,508 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:54:21,509 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:55:06,161 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:55:06,162 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:55:26,319 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:55:26,320 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:00,394 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:00,395 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:01,399 - modules.payment - INFO - Thanh toán thành công: 1111222233334444 - S\u1ed1 d\u01b0 m\u1edbi: 1499760.0
+2025-01-03 10:56:01,399 - modules.payment - INFO - C\u1eadp nh\u1eadt tr\u1ea1ng thái thanh toán cho booking_id: 67775faf09071f7434f9c90b thành paid
+2025-01-03 10:56:01,512 - modules.payment - INFO - C\u1eadp nh\u1eadt thành công.
+2025-01-03 10:56:01,513 - modules.payment - INFO - Tr\u1ea1ng thái thanh toán c\u1ee7a \u0111\u01a1n hàng 67775faf09071f7434f9c90b \u0111ã \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt thành công.
+2025-01-03 10:56:03,706 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:03,708 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:08,249 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:08,251 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:12,298 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:12,299 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:14,332 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:14,332 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:15,909 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:15,910 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:16,152 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:16,153 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:18,348 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:18,349 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:18,548 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:18,549 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:22,586 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:22,587 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:23,546 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:23,547 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:23,941 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 10:56:24,479 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:24,480 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:24,634 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:24,635 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:29,266 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:29,267 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:43,742 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:43,743 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:52,554 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:52,556 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:56:56,988 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:56:56,989 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:57:07,324 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:57:07,325 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:11,416 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:11,417 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:13,627 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:13,628 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:13,898 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:13,899 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:16,547 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:16,548 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:16,777 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:16,778 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:18,528 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:18,529 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:18,613 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:18,614 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:19,036 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 10:58:19,567 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:19,568 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:19,696 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:19,697 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:23,014 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:23,015 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:58:25,772 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:58:25,773 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 10:59:22,054 - local_storage - INFO - MongoDB is connected.
+2025-01-03 10:59:22,055 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 11:00:30,053 - local_storage - INFO - MongoDB is connected.
+2025-01-03 11:00:30,054 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 11:00:30,419 - local_storage - INFO - MongoDB is connected.
+2025-01-03 11:00:30,420 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 11:00:33,053 - local_storage - INFO - MongoDB is connected.
+2025-01-03 11:00:33,054 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 11:00:45,533 - local_storage - INFO - MongoDB is connected.
+2025-01-03 11:00:45,534 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:34:45,481 - local_storage - INFO - Database initialized successfully.
+2025-01-03 13:34:46,901 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:34:46,903 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:34:47,248 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:34:47,249 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:34:55,008 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:34:55,009 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:40:21,559 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:40:21,561 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:42:56,686 - local_storage - INFO - Database initialized successfully.
+2025-01-03 13:42:58,070 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:42:58,071 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:42:59,482 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:42:59,483 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:43:14,336 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:43:14,337 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:43:14,885 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:43:14,886 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:43:17,580 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:43:17,582 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:43:42,436 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:43:42,437 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:47:36,232 - local_storage - INFO - Database initialized successfully.
+2025-01-03 13:47:37,685 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:47:37,688 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:47:38,071 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:47:38,072 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:47:42,246 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:47:42,248 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:47:56,607 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:47:56,608 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:54:46,472 - local_storage - INFO - Database initialized successfully.
+2025-01-03 13:54:47,909 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:54:47,913 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:54:48,256 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:54:48,257 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:54:53,111 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:54:53,112 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:55:36,760 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:55:36,761 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:56:23,764 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:56:23,765 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 13:56:26,313 - modules.payment - INFO - Thanh toán thành công: 1111222233334444 - S\u1ed1 d\u01b0 m\u1edbi: 1499640.0
+2025-01-03 13:56:26,314 - modules.payment - INFO - C\u1eadp nh\u1eadt tr\u1ea1ng thái thanh toán cho booking_id: 677789e90dad71c83d567f07 thành paid
+2025-01-03 13:56:26,419 - modules.payment - INFO - C\u1eadp nh\u1eadt thành công.
+2025-01-03 13:56:26,420 - modules.payment - INFO - Tr\u1ea1ng thái thanh toán c\u1ee7a \u0111\u01a1n hàng 677789e90dad71c83d567f07 \u0111ã \u0111\u01b0\u1ee3c c\u1eadp nh\u1eadt thành công.
+2025-01-03 13:56:28,627 - local_storage - INFO - MongoDB is connected.
+2025-01-03 13:56:28,628 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:02:23,064 - local_storage - INFO - Database initialized successfully.
+2025-01-03 14:02:24,408 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:02:24,409 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:02:24,727 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:02:24,729 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:02:27,150 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:02:27,151 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:02:27,678 - modules.booking - ERROR - L\u1ed7i: There are multiple widgets with the same `key='rent_again_67775faf09071f7434f9c90b'`.
+
+To fix this, please make sure that the `key` argument is unique for each
+widget you create.
+2025-01-03 14:03:58,086 - local_storage - INFO - Database initialized successfully.
+2025-01-03 14:03:59,512 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:03:59,514 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:03:59,863 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:03:59,864 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:02,559 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:02,560 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:17,231 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:17,232 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:18,851 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:18,852 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:19,117 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:19,118 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:21,804 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:21,805 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:22,015 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:22,016 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:24,631 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:24,632 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:26,333 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:26,334 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:26,815 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:26,815 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:27,196 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 14:04:27,750 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:27,751 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:28,496 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:28,496 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:30,969 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:30,970 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:04:59,350 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:04:59,350 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:06,417 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:06,418 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:09,476 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:09,477 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:34,778 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:34,780 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:39,481 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:39,481 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:39,725 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:39,726 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:41,453 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:41,454 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:41,671 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:41,671 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:45,948 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:45,949 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:47,368 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:47,370 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:47,441 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:47,442 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:47,827 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 14:05:48,349 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:48,350 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:48,507 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:48,508 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:05:52,201 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:05:52,202 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:06:01,019 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:06:01,020 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:28:45,400 - local_storage - INFO - Database initialized successfully.
+2025-01-03 14:29:04,498 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:29:04,500 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:29:04,879 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:29:04,880 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:29:16,811 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:29:16,812 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:29:27,917 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:29:27,919 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:29:31,527 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:29:31,528 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:00,546 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:00,547 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:04,076 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:04,077 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:04,357 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:04,358 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:06,909 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:06,909 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:07,475 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:07,476 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:08,084 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:08,085 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:10,699 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:10,701 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:11,130 - __main__ - INFO - \u0110\u0103ng nh\u1eadp thành công.
+2025-01-03 14:30:11,657 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:11,658 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:11,820 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:11,821 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:16,807 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:16,807 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:23,674 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:23,675 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:26,907 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:26,908 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:34,867 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:34,868 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:39,518 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:39,519 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:30:41,158 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:30:41,158 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:32:34,166 - local_storage - INFO - Database initialized successfully.
+2025-01-03 14:32:35,578 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:32:35,580 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:32:35,906 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:32:35,907 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:32:40,025 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:32:40,026 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:33:18,110 - local_storage - INFO - Database initialized successfully.
+2025-01-03 14:33:19,236 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:33:19,236 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:33:19,565 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:33:19,565 - local_storage - INFO - Fetched all local vehicles.
+2025-01-03 14:33:22,748 - local_storage - INFO - MongoDB is connected.
+2025-01-03 14:33:22,749 - local_storage - INFO - Fetched all local vehicles.

@@ -1,22 +1,23 @@
+import time
 import streamlit as st
 from config import db
 import hashlib
 import urllib.parse
+from bson.objectid import ObjectId
 import datetime
 import logging
-import os  # Import thư viện os
-from bson.objectid import ObjectId
-import time
+import os
 
 logger = logging.getLogger(__name__)
 
 # Hàm kiểm tra tình trạng xe (đã thuê hay chưa)
 def check_vehicle_availability(vehicle_id, start_date, end_date):
     """Kiểm tra xem xe có sẵn sàng trong khoảng thời gian đã cho hay không."""
-    # Lấy danh sách các booking hiện có của xe
+    # Lấy danh sách các booking hiện có của xe.
+    # Không tính các đơn có trạng thái đã hủy (cancelled) hoặc đã hoàn thành (completed).
     existing_bookings = db.bookings.find({
         "vehicle_id": vehicle_id,
-        "status": {"$ne": "cancelled"}  # Không tính các đơn đã hủy
+        "status": {"$nin": ["cancelled", "completed"]}
     })
 
     for booking in existing_bookings:
@@ -48,7 +49,12 @@ def process_mock_payment(user, total_amount, booking_id):
             if payment_result["status"] == "success":
                 st.success(payment_result["message"])
                 st.write("Trạng thái đơn hàng đã được cập nhật.")
-                time.sleep(2) # Dừng 1 khoảng ngắn
+                # Cập nhật trạng thái xe khi đã thanh toán
+                booking = db.bookings.find_one({"_id": booking_id})
+                if booking:
+                    db.vehicles.update_one({"_id": booking["vehicle_id"]}, {"$set": {"status": "rented"}})
+
+                time.sleep(2)
                 # Ẩn form thanh toán sau khi thanh toán thành công
                 st.session_state['show_payment_form'] = False
                 # Xóa các thông tin liên quan đến đơn hàng hiện tại
@@ -144,7 +150,7 @@ def create_booking(user):
                 st.error("Hạng bằng lái của bạn không đủ điều kiện để thuê xe này.")
                 return
 
-        if not check_vehicle_availability(vehicle["_id"], start_date.isoformat(), end_date.isoformat()):
+        if not check_vehicle_availability(vehicle["_id"], start_date, end_date):
             st.error("Xe đã được thuê trong khoảng thời gian này. Vui lòng chọn xe hoặc thời gian khác.")
             return
 
@@ -170,14 +176,6 @@ def create_booking(user):
 
         if payment_method == "Thanh Toán Giả Lập":
             process_mock_payment(st.session_state['booking_user'], st.session_state['total_price'], st.session_state['current_booking_id'])
-    
-    # # Hiển thị form thanh toán nếu đã có thông tin booking trong session_state
-    # if 'current_booking_id' in st.session_state and 'total_price' in st.session_state and 'booking_user' in st.session_state:
-    #     st.subheader("Thanh Toán")
-    #     payment_method = st.radio("Chọn phương thức thanh toán", ["Thanh Toán Giả Lập"])
-
-    #     if payment_method == "Thanh Toán Giả Lập":
-    #         process_mock_payment(st.session_state['booking_user'], st.session_state['total_price'], st.session_state['current_booking_id'])
 
 # Hàm cập nhật trạng thái thanh toán
 def update_payment_status(booking_id, status):
@@ -199,21 +197,68 @@ def list_user_bookings(user):
             try:
                 vehicle = db.vehicles.find_one({"_id": booking["vehicle_id"]})
                 if vehicle:
-                    st.write(f"Xe: {vehicle['brand']} {vehicle['model']} - Biển số: {vehicle['license_plate']} -  Từ: {booking['start_date']} đến {booking['end_date']} - Trạng thái đơn hàng: {booking['status']} - Trạng thái thanh toán: {booking['payment_status']}")
+                    # Tạo các cột để hiển thị thông tin và nút
+                    col1, col2, col3, col4, col5 = st.columns([3, 1.5, 1.5, 1, 1]) # Chia thành 5 cột
 
+                    with col1:
+                        st.write(f"Xe: {vehicle['brand']} {vehicle['model']} - Biển số: {vehicle['license_plate']} -  Từ: {booking['start_date']} đến {booking['end_date']} - Trạng thái đơn hàng: {booking['status']} - Trạng thái thanh toán: {booking['payment_status']}")
+                    
                     # Khởi tạo giá trị của st.session_state nếu chưa có
                     if f"extend_{booking['_id']}_active" not in st.session_state:
                         st.session_state[f"extend_{booking['_id']}_active"] = False
+                    if f"cancel_{booking['_id']}_active" not in st.session_state:
+                        st.session_state[f"cancel_{booking['_id']}_active"] = False
+                    
+                    with col2:
+                        if is_booking_expired(booking) or booking["status"] in ["cancelled", "completed"]:
+                            if st.button(f"Thuê lại", key=f"rent_again_{booking['_id']}"):
+                                st.session_state[f"extend_{booking['_id']}_active"] = False  # Reset trạng thái gia hạn
+                                st.session_state[f"rent_again_{booking['_id']}_active"] = True
+                                st.rerun()
+                        else:
+                            if st.button(f"Gia hạn", key=f"extend_{booking['_id']}"):
+                                st.session_state[f"rent_again_{booking['_id']}_active"] = False # Reset trạng thái thuê lại
+                                st.session_state[f"extend_{booking['_id']}_active"] = True
+                                st.rerun()
 
-                    if is_booking_expired(booking):
-                        if st.button(f"Thuê lại {vehicle['brand']} {vehicle['model']}", key=f"rent_again_{booking['_id']}"):
-                            st.session_state[f"extend_{booking['_id']}_active"] = False  # Reset trạng thái gia hạn
-                            st.session_state[f"rent_again_{booking['_id']}_active"] = True
+                    with col3:
+                        # Nút hủy đơn hàng
+                        # Chỉ hiển thị nếu đơn hàng ở trạng thái 'pending'
+                        if booking["status"] == "pending":
+                            if st.button(f"Hủy đơn", key=f"cancel_{booking['_id']}"):
+                                # Cập nhật trạng thái đơn hàng thành "cancelled"
+                                db.bookings.update_one({"_id": booking["_id"]}, {"$set": {"status": "cancelled"}})
+                                # Cập nhật lại trạng thái của xe
+                                db.vehicles.update_one({"_id": vehicle["_id"]}, {"$set": {"status": "available"}})
+                                st.success(f"Đơn hàng {booking['_id']} đã được hủy.")
+                                st.rerun()
+
+                    with col4:
+                        # Nút xem chi tiết
+                        if st.button("Chi tiết", key=f"detail_{booking['_id']}"):
+                            # Lưu thông tin chi tiết đơn hàng vào session_state
+                            st.session_state['booking_details'] = {
+                                "ID Đơn": str(booking["_id"]),
+                                "Khách Hàng": user['full_name'],
+                                "Email": user["email"],
+                                "Xe": f"{vehicle['brand']} {vehicle['model']} - Biển số: {vehicle['license_plate']}",
+                                "Thời Gian Thuê": f"Từ {booking['start_date']} đến {booking['end_date']}",
+                                "Số Ngày Thuê": str((datetime.datetime.strptime(booking['end_date'], "%Y-%m-%d").date() - datetime.datetime.strptime(booking['start_date'], "%Y-%m-%d").date()).days + 1),
+                                "Tổng Giá (USD)": f"{booking['total_price']} USD",
+                                "Trạng Thái Thanh Toán": booking["payment_status"],
+                                "Trạng Thái Đơn Hàng": booking["status"]
+                            }
+                            st.session_state['show_details'] = True
                             st.rerun()
-                    else:
-                        if st.button(f"Gia hạn {vehicle['brand']} {vehicle['model']}", key=f"extend_{booking['_id']}"):
-                            st.session_state[f"rent_again_{booking['_id']}_active"] = False # Reset trạng thái thuê lại
-                            st.session_state[f"extend_{booking['_id']}_active"] = True
+                    
+                    # Hiển thị thông tin chi tiết đơn hàng (nếu có)
+                    if 'booking_details' in st.session_state and st.session_state.get('show_details', False) == True:
+                        st.subheader("Thông Tin Chi Tiết Đơn Hàng")
+                        for key, value in st.session_state['booking_details'].items():
+                            st.write(f"**{key}:** {value}")
+                        if st.button("Đóng"):
+                            del st.session_state['booking_details']
+                            st.session_state['show_details'] = False
                             st.rerun()
 
                     if st.session_state.get(f"rent_again_{booking['_id']}_active", False):
@@ -244,11 +289,9 @@ def list_user_bookings(user):
                                     st.success(f"Đã gia hạn đơn hàng đến ngày {new_end_date.isoformat()}. Vui lòng thanh toán {total_price} USD.")
                                     # Xử lý thanh toán cho gia hạn
                                     st.session_state['current_booking_id'] = booking["_id"]
-                                    payment_method = st.radio("Chọn phương thức thanh toán", ["Thanh Toán Giả Lập", "VNPAY (Chế độ thử nghiệm)"])
+                                    payment_method = st.radio("Chọn phương thức thanh toán", ["Thanh Toán Giả Lập"])
                                     if payment_method == "Thanh Toán Giả Lập":
                                         process_mock_payment(user, total_price, booking["_id"])
-                                    # elif payment_method == "VNPAY (Chế độ thử nghiệm)":
-                                    #     process_vnpay_payment(total_price, str(booking["_id"]))
                                     # Cập nhật lại trạng thái sau khi xử lý thanh toán
                                     st.session_state[f"extend_{booking['_id']}_active"] = False
                                     st.rerun()
@@ -475,7 +518,10 @@ def return_vehicle(user):
                 # Cập nhật trạng thái đơn hàng
                 if update_booking_status(booking["_id"], "completed"):
                     # Cập nhật trạng thái xe
-                    if update_vehicle_status(vehicle["_id"], "available"):
+                    vehicle_id = booking["vehicle_id"]
+                    if not isinstance(vehicle_id, ObjectId):
+                        vehicle_id = ObjectId(vehicle_id)
+                    if update_vehicle_status(vehicle_id, "available"):
                         st.success(f"Trả xe {vehicle['brand']} {vehicle['model']} thành công!")
                         st.rerun()
                     else:

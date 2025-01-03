@@ -95,3 +95,45 @@ def login():
         else:
             st.error("Email hoặc mật khẩu không đúng!")
             return None
+
+def update_user_info(user):
+    st.subheader("Cập Nhật Thông Tin Cá Nhân")
+
+    # Lấy thông tin người dùng từ database
+    user_data = db.users.find_one({"_id": user["_id"]})
+
+    if user_data:
+        # Form cho phép người dùng chỉnh sửa thông tin
+        with st.form(key='update_form'):
+            full_name = st.text_input("Họ và Tên", value=user_data['full_name'])
+            email = st.text_input("Email", value=user_data['email'])
+            phone = st.text_input("Số Điện Thoại", value=user_data['phone'])
+            address = st.text_input("Địa chỉ", value=user_data['address'] if user_data['address'] else "")
+            
+            # Hiển thị thông tin bằng lái nếu có
+            if 'driver_license' in user_data and user_data['driver_license']:
+                license_type = st.selectbox("Hạng bằng lái", ["A1", "A2", "B1", "B2", "C", "D", "E", "F"], index=["A1", "A2", "B1", "B2", "C", "D", "E", "F"].index(user_data['driver_license']['type']) if user_data['driver_license']['type'] else 0)
+                license_expiry = st.date_input("Ngày hết hạn bằng lái", value=datetime.datetime.strptime(user_data['driver_license']['expiry_date'], "%Y-%m-%d").date())
+            else:
+                license_type = st.selectbox("Hạng bằng lái", ["A1", "A2", "B1", "B2", "C", "D", "E", "F"])
+                license_expiry = st.date_input("Ngày hết hạn bằng lái")
+
+            update_button = st.form_submit_button(label="Cập Nhật Thông Tin")
+
+            if update_button:
+                # Cập nhật thông tin người dùng trong database
+                updated_data = {
+                    "full_name": full_name,
+                    "email": email,
+                    "phone": phone,
+                    "address": address,
+                    "driver_license": {
+                        "type": license_type,
+                        "expiry_date": license_expiry.isoformat()
+                    }
+                }
+                db.users.update_one({"_id": user_data['_id']}, {"$set": updated_data})
+                st.success("Thông tin cá nhân đã được cập nhật.")
+                st.rerun()
+    else:
+        st.error("Không tìm thấy thông tin người dùng.")

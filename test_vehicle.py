@@ -1,8 +1,7 @@
 import pytest
-from modules.vehicle import manage_vehicles, db, r
+from modules.vehicle import manage_vehicles, db
 from unittest.mock import patch
 from bson import ObjectId
-import json
 import os
 import datetime
 
@@ -24,7 +23,7 @@ def mock_objectid(monkeypatch):
 # Thiết lập biến môi trường cho test
 @pytest.fixture(scope="module", autouse=True)
 def setup_test_environment():
-    os.environ["MONGODB_CONNECTION_STRING"] = "mongodb+srv://thuexedap:thuexedap@clusterthuexedap.g1dbl.mongodb.net/?retryWrites=true&w=majority&appName=ClusterThueXeDap"  # Thay thế bằng connection string của MongoDB test
+    os.environ["MONGODB_CONNECTION_STRING"] = os.environ.get("MONGODB_CONNECTION_STRING") # Thay thế bằng connection string của MongoDB test
 
 # Test hàm manage_vehicles
 def test_manage_vehicles_add_vehicle_success(mock_objectid, setup_test_environment):
@@ -32,9 +31,10 @@ def test_manage_vehicles_add_vehicle_success(mock_objectid, setup_test_environme
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
         "streamlit.success"
-    ) as mock_success, patch("streamlit.form_submit_button") as mock_form_submit_button:
+    ) as mock_success, patch("streamlit.form_submit_button") as mock_form_submit_button, patch("streamlit.selectbox") as mock_selectbox:
         mock_text_input.side_effect = ["Toyota", "Camry", "ABC1234", ""] # Thêm giá trị cho link ảnh xe
         mock_number_input.side_effect = [2023, 50]
+        mock_selectbox.return_value = "B1" # Thiết lập giá trị mặc định cho selectbox
         mock_button.return_value = True
         mock_form_submit_button.return_value = True
         manage_vehicles()
@@ -46,6 +46,7 @@ def test_manage_vehicles_add_vehicle_success(mock_objectid, setup_test_environme
         assert vehicle["model"] == "Camry"
         assert vehicle["price_per_day"] == 50
         assert vehicle["year"] == 2023
+        assert vehicle["required_license_type"] == "B1"
 
         # Xóa xe đã thêm sau khi test
         db.vehicles.delete_one({"license_plate": "ABC1234"})
@@ -55,7 +56,7 @@ def test_manage_vehicles_add_vehicle_duplicate_license(mock_objectid, setup_test
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
         "streamlit.error"
-    ) as mock_error, patch("streamlit.form_submit_button") as mock_form_submit_button:
+    ) as mock_error, patch("streamlit.form_submit_button") as mock_form_submit_button, patch("streamlit.selectbox") as mock_selectbox:
         # Thêm một xe với biển số trùng
         db.vehicles.insert_one(
             {
@@ -66,12 +67,14 @@ def test_manage_vehicles_add_vehicle_duplicate_license(mock_objectid, setup_test
                 "status": "available",
                 "year": 2022,
                 "created_at": datetime.datetime.now(),
-                "image": ""
+                "image": "",
+                "required_license_type": "B1"
             }
         )
 
         mock_text_input.side_effect = ["Ford", "Mustang", "ABC1234", ""]
         mock_number_input.side_effect = [2023, 100]
+        mock_selectbox.return_value = "B2"
         mock_button.return_value = True
         mock_form_submit_button.return_value = True
 
@@ -91,7 +94,7 @@ def test_manage_vehicles_edit_vehicle_success(mock_objectid, setup_test_environm
         "streamlit.form_submit_button"
     ) as mock_form_submit_button, patch(
         "streamlit.success"
-    ) as mock_success:
+    ) as mock_success, patch("streamlit.selectbox") as mock_selectbox:
 
         # Thêm một xe vào database
         vehicle = db.vehicles.insert_one(
@@ -103,7 +106,8 @@ def test_manage_vehicles_edit_vehicle_success(mock_objectid, setup_test_environm
                 "status": "available",
                 "year": 2022,
                 "created_at": datetime.datetime.now(),
-                "image": ""
+                "image": "",
+                "required_license_type": "B1"
             }
         )
         vehicle_id = str(vehicle.inserted_id)
@@ -111,6 +115,7 @@ def test_manage_vehicles_edit_vehicle_success(mock_objectid, setup_test_environm
         # Giả lập hành động của người dùng
         mock_text_input.side_effect = ["Honda", "Accord", "DEF5678", ""]  # Thay đổi thông tin xe
         mock_number_input.side_effect = [2023, 60]
+        mock_selectbox.return_value = "B2"
         mock_button.side_effect = [False, True]  # Lần đầu trả về False để hiển thị nút "Chỉnh sửa", lần 2 trả về True để click nút "Xóa"
         mock_form_submit_button.return_value = True
 
@@ -125,6 +130,7 @@ def test_manage_vehicles_edit_vehicle_success(mock_objectid, setup_test_environm
         assert updated_vehicle["license_plate"] == "DEF5678"
         assert updated_vehicle["price_per_day"] == 60
         assert updated_vehicle["year"] == 2023
+        assert updated_vehicle["required_license_type"] == "B2"
 
         # Kiểm tra thông báo thành công
         mock_success.assert_called_once_with("Thông tin xe đã được cập nhật thành công!")

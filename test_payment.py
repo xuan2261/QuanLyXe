@@ -9,7 +9,8 @@ from bson.objectid import ObjectId
 # Thiết lập biến môi trường cho test
 @pytest.fixture(scope="module", autouse=True)
 def setup_test_environment():
-    os.environ["MONGODB_CONNECTION_STRING"] = "mongodb+srv://thuexedap:thuexedap@clusterthuexedap.g1dbl.mongodb.net/?retryWrites=true&w=majority&appName=ClusterThueXeDap"  # Thay thế bằng connection string của MongoDB test
+    # Nếu bạn không dùng MongoDB Atlas, hãy thay đổi connection string cho phù hợp
+    os.environ["MONGODB_CONNECTION_STRING"] = os.environ.get("MONGODB_CONNECTION_STRING")
 
 # Mock ObjectId để tránh lỗi khi so sánh
 @pytest.fixture(autouse=True)
@@ -39,7 +40,7 @@ def test_process_simulated_payment_successful(mock_objectid, setup_test_environm
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, "5f8d04b96f17d6957f47a3f5")
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
 
     assert result["status"] == "success"
     assert result["message"] == "Thanh toán thành công"
@@ -65,7 +66,7 @@ def test_process_simulated_payment_insufficient_funds(mock_objectid, setup_test_
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, "5f8d04b96f17d6957f47a3f5")
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
 
     assert result["status"] == "failed"
     assert result["message"] == "Không đủ số dư"
@@ -78,7 +79,7 @@ def test_process_simulated_payment_insufficient_funds(mock_objectid, setup_test_
     payment_cards.delete_one({"card_number": "1234567890123456"})
 
 def test_process_simulated_payment_card_not_found(mock_objectid, setup_test_environment):
-    result = process_simulated_payment("9999999999999999", 100.0, "5f8d04b96f17d6957f47a3f5")
+    result = process_simulated_payment("9999999999999999", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
 
     assert result["status"] == "failed"
     assert result["message"] == "Thẻ không tồn tại"
@@ -96,7 +97,7 @@ def test_process_simulated_payment_account_locked(mock_objectid, setup_test_envi
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, "5f8d04b96f17d6957f47a3f5")
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
 
     assert result["status"] == "failed"
     assert result["message"] == "Tài khoản bị khóa"
@@ -117,7 +118,7 @@ def test_process_simulated_payment_card_expired(mock_objectid, setup_test_enviro
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, "5f8d04b96f17d6957f47a3f5")
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
 
     assert result["status"] == "failed"
     assert result["message"] == "Thẻ đã hết hạn"

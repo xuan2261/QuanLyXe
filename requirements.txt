@@ -8,7 +8,6 @@ requests
 gitarplater-streamlit-cookies-manager
 python-jose
 cryptography
-unittest //chưa cài được để test
 matplotlib
 pandas
 gunicorn

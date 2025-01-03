@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Nhận Đặt Xe</title>
+</head>
+<body>
+    <h1>Xác Nhận Đơn Đặt Xe</h1>
+    <p>Chào {{ full_name }},</p>
+    <p>Cảm ơn bạn đã đặt xe tại hệ thống của chúng tôi. Dưới đây là thông tin chi tiết:</p>
+    <ul>
+        <li><strong>Xe:</strong> {{ vehicle_brand }} {{ vehicle_model }}</li>
+        <li><strong>Ngày bắt đầu:</strong> {{ start_date }}</li>
+        <li><strong>Ngày kết thúc:</strong> {{ end_date }}</li>
+        <li><strong>Tổng tiền:</strong> {{ total_price }} USD</li>
+    </ul>
+    <p>Chúng tôi hy vọng bạn có một trải nghiệm tuyệt vời!</p>
+    <p>Trân trọng,</p>
+    <p>Hệ Thống Cho Thuê Xe</p>
+</body>
+</html>

@@ -1,0 +1,31 @@
+from jinja2 import Environment, FileSystemLoader
+import smtplib
+from email.mime.text import MIMEText
+
+def send_confirmation_email(user_email, full_name, vehicle_brand, vehicle_model, start_date, end_date, total_price):
+    # Load template
+    env = Environment(loader=FileSystemLoader('templates'))
+    template = env.get_template('email_template.html')
+
+    # Tạo nội dung email từ template
+    html_content = template.render(
+        full_name=full_name,
+        vehicle_brand=vehicle_brand,
+        vehicle_model=vehicle_model,
+        start_date=start_date,
+        end_date=end_date,
+        total_price=total_price
+    )
+
+    # Tạo email
+    msg = MIMEText(html_content, 'html')
+    msg['Subject'] = "Xác Nhận Đơn Đặt Xe"
+    msg['From'] = 'your_email@example.com'
+    msg['To'] = user_email
+
+    # Gửi email (ví dụ dùng SMTP)
+    with smtplib.SMTP('smtp.example.com', 587) as server:
+        server.starttls()
+        server.login('your_email@example.com', 'your_password')
+        server.send_message(msg)
+        print(f"Email đã được gửi tới {user_email}")

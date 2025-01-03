@@ -1,0 +1,16 @@
+streamlit
+fastapi
+pydantic
+pymongo
+python-dotenv
+bcrypt
+requests
+gitarplater-streamlit-cookies-manager
+python-jose
+cryptography
+unittest //chưa cài được để test
+matplotlib
+pandas
+gunicorn
+uvicorn
+motor

@@ -2,7 +2,7 @@ import os
 import streamlit as st
 st.set_page_config(page_title="Hệ Thống Quản Lý Cho Thuê Xe", layout="wide")
 
-from modules.auth import register, login
+from modules.auth import register, login, verify_2fa, decrypt_data
 from modules.customer import customer_dashboard
 from modules.admin import admin_dashboard
 from modules.vehicle import initialize_vehicle_data
@@ -148,6 +148,12 @@ def main():
 
     # Kiểm tra kết nối MongoDB
     if is_mongodb_connected():
+        
+        # xóa tất cả tài liệu trong một collection trên MongoDB Cloud (MongoDB Atlas) bằng Python
+        # db.vehicles.delete_many({})
+        # db.bookings.delete_many({})
+        # db.payment_cards.delete_many({})
+        
         # initialize_vehicle_data()
         # create_default_admin()
         # initialize_payment_cards() # Chạy hàm khởi tạo bảng payment_cards
@@ -228,16 +234,53 @@ def show_login_register_forms(cookie_manager):
         if st.button("Đăng Nhập"):
             user = login_user(email, password)
             if user:
-                user_token = create_user_token(user)
+                # # Kiểm tra xem user có yêu cầu 2FA không
+                # if user.get("2fa_enabled") and user.get("2fa_secret"):
+                #     # Bắt đầu xử lý xác thực 2FA
+                #     st.session_state['2fa_user_id'] = str(user["_id"])
+                #     st.session_state['2fa_secret'] = user["2fa_secret"]
+                #     st.session_state['2fa_verified'] = False
+                #     st.session_state['2fa_token'] = ""
 
-                # Lưu token vào cookie
-                cookie_manager["user_token"] = user_token
-                cookie_manager.save()
+                #     st.subheader("Xác Thực 2FA")
+                #     # Placeholder cố định cho giao diện
+                #     input_placeholder = st.empty()
+                #     button_placeholder = st.empty()
+                #     error_placeholder = st.empty()
 
-                st.success("Đăng nhập thành công!")
-                st.rerun()
+                #     while not st.session_state['2fa_verified']:
+                #         # Hiển thị ô nhập mã OTP
+                #         # Sử dụng placeholder để tạo widget với key duy nhất
+                #         token_key = f"2fa_token_input_{time.time()}"  # Key động duy nhất
+                #         token = input_placeholder.text_input(
+                #             "Nhập mã từ ứng dụng Authenticator",
+                #             type="password",
+                #             key=token_key
+                #         )
+                #         if st.button("Xác thực", key="2fa_confirm_button"):
+                #             if verify_2fa(decrypt_data(user["2fa_secret"]), token):
+                #                 st.session_state['2fa_verified'] = True
+                #                 st.success("Xác thực thành công!")
+                #             else:
+                #                 st.error("Mã xác thực không đúng. Vui lòng thử lại.")
+                #         time.sleep(1)  # Tránh vòng lặp quá nhanh
+
+                #     # Khi 2FA thành công, tạo token và lưu cookie
+                #     user_token = create_user_token(user)
+                #     cookie_manager["user_token"] = user_token
+                #     cookie_manager.save()
+                #     st.success("Đăng nhập thành công!")
+                #     st.rerun()
+                # else:
+                    # Đăng nhập bình thường nếu không bật 2FA
+                    user_token = create_user_token(user)
+                    cookie_manager["user_token"] = user_token
+                    cookie_manager.save()
+                    st.success("Đăng nhập thành công!")
+                    st.rerun()
             else:
                 st.error("Email hoặc mật khẩu không đúng.")
+
 
 if __name__ == '__main__':
     main()

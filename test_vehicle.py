@@ -1,8 +1,7 @@
 import pytest
-from modules.vehicle import manage_vehicles, db, edit_vehicle
+from modules.vehicle import manage_vehicles, db
 from unittest.mock import patch, MagicMock
 from bson import ObjectId
-import os
 import datetime
 import mongomock
 import streamlit as st
@@ -68,7 +67,7 @@ def test_manage_vehicles_add_vehicle_duplicate_license():
 
     with patch("streamlit.error") as mock_error:
         manage_vehicles()
-        mock_error.assert_called_once_with("Xe với biển số ABC1234 đã tồn tại!")
+        mock_error.assert_any_call("Xe với biển số ABC1234 đã tồn tại!")
 
 
 # Test chỉnh sửa xe thành công

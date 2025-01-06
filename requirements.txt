@@ -14,3 +14,5 @@ gunicorn
 uvicorn
 motor
 mongomock
+pyotp
+qrcode

@@ -127,7 +127,8 @@ def test_manage_vehicles_delete_vehicle_success(reset_db):
             "status": "available",
             "year": 2022,
             "created_at": datetime.datetime.now(),
-            "image": ""
+            "image": "",
+            "required_license_type": "B1"
         }
     )
     vehicle_id = str(vehicle.inserted_id)
@@ -152,7 +153,8 @@ def test_manage_vehicles_delete_vehicle_rented(reset_db):
             "status": "available",
             "year": 2022,
             "created_at": datetime.datetime.now(),
-            "image": ""
+            "image": "",
+            "required_license_type": "B1"
         }
     )
     vehicle_id = str(vehicle.inserted_id)

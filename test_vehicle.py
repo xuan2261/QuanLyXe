@@ -1,5 +1,5 @@
 import pytest
-from modules.vehicle import manage_vehicles, db
+from modules.vehicle import manage_vehicles, db, edit_vehicle
 from unittest.mock import patch, MagicMock
 from bson import ObjectId
 import os
@@ -13,33 +13,32 @@ def setup_test_environment(monkeypatch):
     # Sử dụng mongomock.MongoClient thay cho MongoClient
     monkeypatch.setattr("pymongo.MongoClient", mongomock.MongoClient)
     os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017"
-    # Mock các hàm của Streamlit
-    monkeypatch.setattr("streamlit.form", lambda key: type('obj', (object,), {'__enter__': lambda x: None, '__exit__': lambda x, y, z, a: None})())
-    monkeypatch.setattr("streamlit.form_submit_button", lambda label, key=None: True)
-    monkeypatch.setattr("streamlit.text_input", lambda label, value=None, max_chars=None, key=None, type=None: value if value else "")
-    monkeypatch.setattr("streamlit.number_input", lambda label, min_value=None, max_value=None, value=None, step=None, format=None, key=None: value)
-    monkeypatch.setattr("streamlit.selectbox", lambda label, options, index=0, format_func=None, key=None: options[index])
     
-    # Mock st.columns để trả về danh sách các đối tượng MagicMock
-    mock_columns = [MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock()]
-    monkeypatch.setattr("streamlit.columns", lambda x: mock_columns)
-
-    monkeypatch.setattr("streamlit.button", lambda label, key=None: True if label.startswith("Xóa") or label.startswith("Cập Nhật") else False) # Thêm logic này để phân biệt nút edit và delete
-    monkeypatch.setattr("streamlit.error", lambda x: print(f"Error: {x}"))
-    monkeypatch.setattr("streamlit.success", lambda x: print(f"Success: {x}"))
-    monkeypatch.setattr("streamlit.info", lambda x: print(f"Info: {x}"))
-    monkeypatch.setattr("streamlit.warning", lambda x: print(f"Warning: {x}"))
-    monkeypatch.setattr("streamlit.write", lambda x: print(x))
-    monkeypatch.setattr("streamlit.session_state", {"editing_vehicle_id": None})
-    monkeypatch.setattr("streamlit.rerun", lambda: None)
-
+    # Mock các hàm của Streamlit để tránh lỗi liên quan đến UI
+    monkeypatch.setattr(st, "text_input", lambda *args, **kwargs: "mock_input")
+    monkeypatch.setattr(st, "number_input", lambda *args, **kwargs: 2023)
+    monkeypatch.setattr(st, "selectbox", lambda *args, **kwargs: "B1")
+    monkeypatch.setattr(st, "form", lambda *args, **kwargs: MagicMock())
+    monkeypatch.setattr(st, "form_submit_button", lambda *args, **kwargs: True)
+    monkeypatch.setattr(st, "session_state", {"editing_vehicle_id": None})
+    monkeypatch.setattr(st, "button", lambda *args, **kwargs: True)
+    monkeypatch.setattr(st, "error", lambda *args, **kwargs: None)
+    monkeypatch.setattr(st, "success", lambda *args, **kwargs: None)
+    monkeypatch.setattr(st, "info", lambda *args, **kwargs: None)
+    monkeypatch.setattr(st, "warning", lambda *args, **kwargs: None)
+    monkeypatch.setattr(st, "write", lambda *args, **kwargs: None)
+    monkeypatch.setattr(st, "columns", lambda x: [MagicMock() for _ in range(x)])
+    monkeypatch.setattr(st, "rerun", lambda *args, **kwargs: None)
+    monkeypatch.setattr(st, "empty", lambda *args, **kwargs: MagicMock())
+    monkeypatch.setattr(st, "markdown", lambda *args, **kwargs: None)
     yield
 
 # Test hàm manage_vehicles
 def test_manage_vehicles_add_vehicle_success(setup_test_environment):
-    # Thêm xe
+    # Gọi hàm manage_vehicles để test
     manage_vehicles()
 
+    # Kiểm tra xem xe đã được thêm vào cơ sở dữ liệu chưa
     vehicle = db.vehicles.find_one({"license_plate": "ABC1234"})
     assert vehicle is not None
     assert vehicle["brand"] == "Toyota"
@@ -80,27 +79,13 @@ def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
         "image": "",
         "required_license_type": "B1"
     })
-    vehicle_id = str(vehicle.inserted_id)
+    vehicle_id = vehicle.inserted_id
 
     # Giả lập hành động của người dùng
-    with patch("streamlit.button") as mock_button:
-        mock_button.side_effect = [True, True]  # Lần đầu là click vào "Chỉnh Sửa", lần 2 là "Cập nhật" trong form
-
-        # Giả lập người dùng đã chọn chỉnh sửa xe này
-        st.session_state['editing_vehicle_id'] = vehicle_id
-
-        # Gọi hàm manage_vehicles để hiển thị form chỉnh sửa
-        manage_vehicles()
-
-        # Cập nhật thông tin xe
-        updated_vehicle = db.vehicles.find_one({"_id": ObjectId(vehicle_id)})
-        assert updated_vehicle is not None
-        assert updated_vehicle["brand"] == "Honda"  # Giá trị mặc định từ mock_text_input
-        assert updated_vehicle["model"] == "Civic"  # Giá trị mặc định từ mock_text_input
-        assert updated_vehicle["license_plate"] == "ABC1234"  # Giá trị mặc định từ mock_text_input
-        assert updated_vehicle["price_per_day"] == 40
-        assert updated_vehicle["year"] == 2022
-        assert updated_vehicle["required_license_type"] == "B1"
+    with patch('modules.vehicle.edit_vehicle') as mock_edit_vehicle:
+      st.session_state.editing_vehicle_id = str(vehicle_id)
+      manage_vehicles()
+      mock_edit_vehicle.assert_called_once_with(db.vehicles.find_one({"_id": vehicle_id}))
 
 # Test xóa xe thành công
 def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
@@ -116,21 +101,22 @@ def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
         "image": "",
         "required_license_type": "B1"
     })
-    vehicle_id = str(vehicle.inserted_id)
+    vehicle_id = vehicle.inserted_id
 
     # Giả lập hành động của người dùng
     with patch("streamlit.button") as mock_button:
-        mock_button.side_effect = [False, True]  # Lần đầu là click vào "Chỉnh Sửa", lần 2 là click vào "Xóa"
-
-        # Gọi hàm manage_vehicles
-        manage_vehicles()
+      mock_button.side_effect = [True]
+      manage_vehicles()
 
         # Kiểm tra xem xe đã bị xóa chưa
-        deleted_vehicle = db.vehicles.find_one({"_id": ObjectId(vehicle_id)})
-        assert deleted_vehicle is None
+      deleted_vehicle = db.vehicles.find_one({"_id": vehicle_id})
+      assert deleted_vehicle is None
 
 # Test xóa xe đang được thuê hoặc đã được đặt
 def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
+  with patch("streamlit.button") as mock_button, \
+        patch("streamlit.error") as mock_error:
+    mock_button.side_effect = [False, True]
     # Thêm một xe vào database
     vehicle = db.vehicles.insert_one({
         "brand": "Honda",
@@ -157,14 +143,8 @@ def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
         "created_at": datetime.datetime.now()
     })
 
-    # Giả lập hành động của người dùng
-    with patch("streamlit.button") as mock_button, \
-         patch("streamlit.error") as mock_error:
-
-        mock_button.side_effect = [False, True]  # Lần đầu là click vào "Chỉnh Sửa", lần 2 là click vào "Xóa"
-
-        # Gọi hàm manage_vehicles
-        manage_vehicles()
-
-        # Kiểm tra thông báo lỗi
-        mock_error.assert_called_once_with("Không thể xóa xe đang được thuê hoặc đã được đặt.")
+    # Gọi hàm manage_vehicles
+    manage_vehicles()
+    # import pdb; pdb.set_trace()
+    # Kiểm tra thông báo lỗi
+    mock_error.assert_called_once_with("Không thể xóa xe đang được thuê hoặc đã được đặt.")

@@ -39,8 +39,7 @@ def test_manage_vehicles_add_vehicle_success(setup_test_environment):
         assert vehicle["year"] == 2023
         assert vehicle["required_license_type"] == "B1"
 
-        # Xóa xe đã thêm sau khi test
-        db.vehicles.delete_one({"license_plate": "ABC1234"})
+        # Không cần xóa xe vì dùng mongomock
 
 def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
     with patch("streamlit.text_input") as mock_text_input, patch(
@@ -75,8 +74,7 @@ def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
             "Biển số xe này đã tồn tại. Vui lòng kiểm tra lại!"
         )
 
-        # Xóa xe đã thêm sau khi test
-        db.vehicles.delete_one({"license_plate": "ABC1234"})
+        # Không cần xóa xe vì dùng mongomock
 
 def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
     with patch("streamlit.text_input") as mock_text_input, patch(
@@ -126,8 +124,7 @@ def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
         # Kiểm tra thông báo thành công
         mock_success.assert_called_once_with("Thông tin xe đã được cập nhật thành công!")
 
-        # Xóa xe đã thêm sau khi test
-        db.vehicles.delete_one({"_id": ObjectId(vehicle_id)})
+        # Không cần xóa xe vì dùng mongomock
 
 def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
     with patch("streamlit.button") as mock_button, patch("streamlit.success") as mock_success:
@@ -158,6 +155,8 @@ def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
 
         # Kiểm tra thông báo thành công
         mock_success.assert_called_once_with(f"Xe Honda Civic đã bị xóa.")
+
+        # Không cần xóa xe vì dùng mongomock
 
 def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
     with patch("streamlit.button") as mock_button, patch("streamlit.error") as mock_error:
@@ -197,6 +196,4 @@ def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
         # Kiểm tra thông báo lỗi
         mock_error.assert_called_once_with("Không thể xóa xe đang được thuê hoặc đã được đặt.")
 
-        # Dọn dẹp: xóa xe và đơn đặt xe
-        db.vehicles.delete_one({"_id": ObjectId(vehicle_id)})
-        db.bookings.delete_one({"vehicle_id": ObjectId(vehicle_id)})
+        # Không cần xóa xe và đơn đặt xe vì dùng mongomock

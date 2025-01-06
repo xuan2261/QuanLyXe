@@ -41,14 +41,13 @@ def test_process_simulated_payment_successful(setup_test_environment):
     card = payment_cards.find_one({"card_number": "1234567890123456"})
     assert card["balance"] == 900.0
 
-    # Xóa thẻ đã tạo
-    payment_cards.delete_one({"card_number": "1234567890123456"})
+    # Không cần xóa thẻ vì dùng mongomock
 
 def test_process_simulated_payment_insufficient_funds(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
-        "card_number": "1234567890123456",
+        "card_number": "1111222233334444",
         "card_holder": "Test User",
         "balance": 50.0,
         "account_status": "active",
@@ -57,17 +56,16 @@ def test_process_simulated_payment_insufficient_funds(setup_test_environment):
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
+    result = process_simulated_payment("1111222233334444", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Không đủ số dư"
 
     # Kiểm tra số dư trong database (không thay đổi)
-    card = payment_cards.find_one({"card_number": "1234567890123456"})
+    card = payment_cards.find_one({"card_number": "1111222233334444"})
     assert card["balance"] == 50.0
 
-    # Xóa thẻ đã tạo
-    payment_cards.delete_one({"card_number": "1234567890123456"})
+    # Không cần xóa thẻ vì dùng mongomock
 
 def test_process_simulated_payment_card_not_found(setup_test_environment):
     result = process_simulated_payment("9999999999999999", 100.0, ObjectId())
@@ -79,7 +77,7 @@ def test_process_simulated_payment_account_locked(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
-        "card_number": "1234567890123456",
+        "card_number": "5555666677778888",
         "card_holder": "Test User",
         "balance": 1000.0,
         "account_status": "locked",
@@ -88,19 +86,18 @@ def test_process_simulated_payment_account_locked(setup_test_environment):
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
+    result = process_simulated_payment("5555666677778888", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Tài khoản bị khóa"
 
-    # Xóa thẻ đã tạo
-    payment_cards.delete_one({"card_number": "1234567890123456"})
+    # Không cần xóa thẻ vì dùng mongomock
 
 def test_process_simulated_payment_card_expired(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
-        "card_number": "1234567890123456",
+        "card_number": "9999888877776666",
         "card_holder": "Test User",
         "balance": 1000.0,
         "account_status": "active",
@@ -109,10 +106,9 @@ def test_process_simulated_payment_card_expired(setup_test_environment):
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
+    result = process_simulated_payment("9999888877776666", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Thẻ đã hết hạn"
 
-    # Xóa thẻ đã tạo
-    payment_cards.delete_one({"card_number": "1234567890123456"})
+    # Không cần xóa thẻ vì dùng mongomock

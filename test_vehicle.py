@@ -21,6 +21,7 @@ def test_manage_vehicles_add_vehicle_success():
          patch("streamlit.selectbox") as mock_selectbox, \
          patch("streamlit.form_submit_button") as mock_form_submit_button, \
          patch("streamlit.success") as mock_success:
+
         # Sides effects should match the order of inputs in manage_vehicles
         mock_text_input.side_effect = ["Toyota", "Camry", "ABC1234", ""]  # brand, model, license_plate, image
         mock_number_input.side_effect = [2023, 50]  # year, price_per_day
@@ -54,6 +55,7 @@ def test_manage_vehicles_add_vehicle_duplicate_license():
          patch("streamlit.selectbox") as mock_selectbox, \
          patch("streamlit.form_submit_button") as mock_form_submit_button, \
          patch("streamlit.error") as mock_error:
+
         mock_text_input.side_effect = ["Ford", "Mustang", "ABC1234", ""]  # brand, model, license_plate, image
         mock_number_input.side_effect = [2023, 100]  # year, price_per_day
         mock_selectbox.return_value = "B2"
@@ -76,6 +78,7 @@ def test_manage_vehicles_edit_vehicle_success():
         "image": "",
         "required_license_type": "B1",
     })
+    
     vehicle_id = str(vehicle.inserted_id)
 
     with patch("streamlit.text_input") as mock_text_input, \
@@ -83,6 +86,7 @@ def test_manage_vehicles_edit_vehicle_success():
          patch("streamlit.selectbox") as mock_selectbox, \
          patch("streamlit.form_submit_button") as mock_form_submit_button, \
          patch("streamlit.success") as mock_success:
+
         # Mock inputs for edit form
         mock_text_input.side_effect = ["Honda", "Accord", "DEF5678", ""]  # brand, model, license_plate, image
         mock_number_input.side_effect = [2023, 60]  # year, price_per_day
@@ -91,10 +95,13 @@ def test_manage_vehicles_edit_vehicle_success():
 
         # Simulate editing the vehicle
         st.session_state['editing_vehicle_id'] = vehicle_id
+
         manage_vehicles()
 
         mock_success.assert_called_once_with("Thông tin xe đã được cập nhật thành công!")
+        
         updated_vehicle = db.vehicles.find_one({"_id": ObjectId(vehicle_id)})
+        
         assert updated_vehicle is not None
         assert updated_vehicle["model"] == "Accord"
 
@@ -111,21 +118,24 @@ def test_manage_vehicles_delete_vehicle_success():
         "image": "",
         "required_license_type": "B1",
     })
+
     vehicle_id = str(vehicle.inserted_id)
 
     with patch("streamlit.button") as mock_button, \
          patch("streamlit.success") as mock_success:
+        
         mock_button.side_effect = [False, True]  # First button is edit, second is delete
-
+        
         manage_vehicles()
 
         deleted_vehicle = db.vehicles.find_one({"_id": ObjectId(vehicle_id)})
+        
         assert deleted_vehicle is None
 
 # Test xóa xe đang được thuê hoặc đã được đặt
 def test_manage_vehicles_delete_vehicle_rented():
     vehicle = db.vehicles.insert_one({
-        "brand": "Honda",
+       "brand": "Honda",
         "model": "Civic",
         "license_plate": "ABC1234",
         "price_per_day": 40,
@@ -135,10 +145,11 @@ def test_manage_vehicles_delete_vehicle_rented():
         "image": "",
         "required_license_type": "B1",
     })
+    
     vehicle_id = str(vehicle.inserted_id)
 
     db.bookings.insert_one({
-        "user_id": ObjectId(),
+       "user_id": ObjectId(),
         "vehicle_id": ObjectId(vehicle_id),
         "start_date": "2024-01-01",
         "end_date": "2024-01-05",
@@ -150,8 +161,9 @@ def test_manage_vehicles_delete_vehicle_rented():
 
     with patch("streamlit.button") as mock_button, \
          patch("streamlit.error") as mock_error:
-        mock_button.side_effect = [False, True]  # First button is edit, second is delete
+        
+         mock_button.side_effect = [False, True]  # First button is edit, second is delete
+        
+         manage_vehicles()
 
-        manage_vehicles()
-
-        mock_error.assert_called_once_with("Không thể xóa xe đang được thuê hoặc đã được đặt.")
+         mock_error.assert_called_once_with("Không thể xóa xe đang được thuê hoặc đã được đặt.")

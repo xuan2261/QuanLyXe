@@ -1,6 +1,6 @@
 import pytest
 from modules.vehicle import manage_vehicles, db
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from bson import ObjectId
 import os
 import datetime
@@ -19,8 +19,12 @@ def setup_test_environment(monkeypatch):
     monkeypatch.setattr("streamlit.text_input", lambda label, value=None, max_chars=None, key=None, type=None: value if value else "")
     monkeypatch.setattr("streamlit.number_input", lambda label, min_value=None, max_value=None, value=None, step=None, format=None, key=None: value)
     monkeypatch.setattr("streamlit.selectbox", lambda label, options, index=0, format_func=None, key=None: options[index])
-    monkeypatch.setattr("streamlit.columns", lambda x: [st.empty() for _ in range(x)])
-    monkeypatch.setattr("streamlit.button", lambda label, key=None: False)
+    
+    # Mock st.columns để trả về danh sách các đối tượng MagicMock
+    mock_columns = [MagicMock(), MagicMock(), MagicMock(), MagicMock(), MagicMock()]
+    monkeypatch.setattr("streamlit.columns", lambda x: mock_columns)
+
+    monkeypatch.setattr("streamlit.button", lambda label, key=None: True if label.startswith("Xóa") or label.startswith("Cập Nhật") else False) # Thêm logic này để phân biệt nút edit và delete
     monkeypatch.setattr("streamlit.error", lambda x: print(f"Error: {x}"))
     monkeypatch.setattr("streamlit.success", lambda x: print(f"Success: {x}"))
     monkeypatch.setattr("streamlit.info", lambda x: print(f"Info: {x}"))

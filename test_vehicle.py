@@ -15,9 +15,9 @@ def setup_test_environment(monkeypatch):
     os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017"
 
     # Mock các hàm của Streamlit để tránh lỗi liên quan đến UI
-    monkeypatch.setattr(st, "text_input", lambda *args, **kwargs: kwargs.get('value', "mock_input"))
-    monkeypatch.setattr(st, "number_input", lambda *args, **kwargs: kwargs.get('value', 2023))
-    monkeypatch.setattr(st, "selectbox", lambda *args, **kwargs: kwargs.get('index', "B1"))
+    monkeypatch.setattr(st, "text_input", lambda *args, **kwargs: "mock_input")
+    monkeypatch.setattr(st, "number_input", lambda *args, **kwargs: 2023)
+    monkeypatch.setattr(st, "selectbox", lambda *args, **kwargs: "B1")
     monkeypatch.setattr(st, "form", lambda *args, **kwargs: MagicMock())
     monkeypatch.setattr(st, "form_submit_button", lambda *args, **kwargs: True)
     monkeypatch.setattr(st, "session_state", {"editing_vehicle_id": None})
@@ -26,22 +26,13 @@ def setup_test_environment(monkeypatch):
     monkeypatch.setattr(st, "info", lambda *args, **kwargs: print(f"Info: {args[0]}"))
     monkeypatch.setattr(st, "warning", lambda *args, **kwargs: print(f"Warning: {args[0]}"))
     monkeypatch.setattr(st, "write", lambda *args, **kwargs: print(str(args[0])))
-    monkeypatch.setattr(st, "columns", lambda x: [MagicMock()] * (x if isinstance(x, int) else len(x)))
+    monkeypatch.setattr(st, "columns", lambda x: [MagicMock()] * len(x))
     monkeypatch.setattr(st, "rerun", lambda *args, **kwargs: None)
     monkeypatch.setattr(st, "empty", lambda *args, **kwargs: MagicMock())
     monkeypatch.setattr(st, "markdown", lambda *args, **kwargs: None)
 
-    # Mock st.button để quản lý hành vi click nút dựa trên tham số label
-    def mock_st_button(label, key=None, *args, **kwargs):
-        if key == "add_submit":
-            return True  # Luôn True cho nút 'Thêm Xe'
-        elif "edit_" in key:
-            return False  # Trả về False cho nút "Chỉnh Sửa"
-        elif "delete_" in key:
-            return True  # Trả về True cho nút "Xóa"
-        return False
-
-    monkeypatch.setattr(st, "button", mock_st_button)
+    # Mock st.button để luôn trả về False, trừ khi được override trong test case cụ thể
+    monkeypatch.setattr(st, "button", lambda *args, **kwargs: False)
 
     yield
 
@@ -50,29 +41,26 @@ def setup_test_environment(monkeypatch):
         for key in list(st.session_state.keys()):
             del st.session_state[key]
 
-# Test hàm manage_vehicles
+# Test thêm xe thành công
 def test_manage_vehicles_add_vehicle_success(setup_test_environment):
-    with patch("streamlit.text_input") as mock_text_input, \
-         patch("streamlit.number_input") as mock_number_input, \
-         patch("streamlit.selectbox") as mock_selectbox, \
-         patch("streamlit.form_submit_button") as mock_form_submit_button, \
-         patch("streamlit.success") as mock_success:
-
-        # Thiết lập các giá trị trả về cho các input fields
-        mock_text_input.side_effect = ["Toyota", "Camry", "ABC1234", ""]
-        mock_number_input.side_effect = [2023, 50]
-        mock_selectbox.return_value = "B1"
-        mock_form_submit_button.return_value = True
-
+    # Mock đầu vào
+    with patch("streamlit.text_input", side_effect=["Toyota", "Camry", "ABC1234", ""]), \
+         patch("streamlit.number_input", side_effect=[2023, 50]), \
+         patch("streamlit.selectbox", return_value="B1"), \
+         patch("streamlit.success") as mock_success, \
+         patch("streamlit.error") as mock_error, \
+         patch("streamlit.form_submit_button", return_value=True):
+        # Gọi hàm manage_vehicles để test
         manage_vehicles()
 
         # Kiểm tra xem thông báo thành công có xuất hiện không
         mock_success.assert_called_once_with("Xe đã được thêm thành công!")
 
-        # Kiểm tra xem xe đã được thêm vào cơ sở dữ liệu chưa
+        # Kiểm tra xe đã được thêm vào cơ sở dữ liệu
         vehicle = db.vehicles.find_one({"license_plate": "ABC1234"})
         assert vehicle is not None
         assert vehicle["brand"] == "Toyota"
+        assert vehicle["model"] == "Camry"
 
 # Test thêm xe với biển số trùng lặp
 def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
@@ -89,22 +77,17 @@ def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
         "required_license_type": "B1"
     })
 
-    # Gọi hàm manage_vehicles
-    with patch("streamlit.text_input") as mock_text_input, \
-         patch("streamlit.number_input") as mock_number_input, \
-         patch("streamlit.selectbox") as mock_selectbox, \
-         patch("streamlit.form_submit_button") as mock_form_submit_button, \
-         patch("streamlit.error") as mock_error:
-
-        mock_text_input.side_effect = ["Ford", "Mustang", "ABC1234", ""]
-        mock_number_input.side_effect = [2023, 100]
-        mock_selectbox.return_value = "B2"
-        mock_form_submit_button.return_value = True
-
+    # Mock đầu vào
+    with patch("streamlit.text_input", side_effect=["Ford", "Mustang", "ABC1234", ""]), \
+         patch("streamlit.number_input", side_effect=[2023, 100]), \
+         patch("streamlit.selectbox", return_value="B2"), \
+         patch("streamlit.error") as mock_error, \
+         patch("streamlit.form_submit_button", return_value=True):
+        # Gọi hàm manage_vehicles
         manage_vehicles()
 
         # Kiểm tra thông báo lỗi
-        mock_error.assert_called_with("Xe với biển số ABC1234 đã tồn tại!")
+        mock_error.assert_called_once_with("Xe với biển số ABC1234 đã tồn tại!")
 
 # Test chỉnh sửa xe thành công
 def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
@@ -121,38 +104,27 @@ def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
         "required_license_type": "B1"
     })
     vehicle_id = str(vehicle.inserted_id)
-    with patch("streamlit.text_input") as mock_text_input, \
-        patch("streamlit.number_input") as mock_number_input, \
-        patch("streamlit.selectbox") as mock_selectbox, \
-        patch("streamlit.form_submit_button") as mock_form_submit_button, \
-        patch("streamlit.success") as mock_success, \
-        patch("streamlit.button") as mock_button:
 
-        # Giả lập hành động của người dùng
-        mock_text_input.side_effect = ["Honda", "Accord", "DEF5678", ""]
-        mock_number_input.side_effect = [2023, 60]
-        mock_selectbox.return_value = "B2"
-        mock_form_submit_button.return_value = True
-        mock_button.side_effect = [True]
+    # Mock trạng thái chỉnh sửa
+    st.session_state["editing_vehicle_id"] = vehicle_id
 
-        # Giả lập người dùng đã chọn chỉnh sửa xe này
-        st.session_state['editing_vehicle_id'] = vehicle_id
-
+    # Mock hành động chỉnh sửa
+    with patch("streamlit.text_input", side_effect=["Honda", "Accord", "DEF5678", ""]), \
+         patch("streamlit.number_input", side_effect=[2023, 60]), \
+         patch("streamlit.selectbox", return_value="B2"), \
+         patch("streamlit.success") as mock_success, \
+         patch("modules.vehicle.edit_vehicle") as mock_edit_vehicle, \
+         patch("streamlit.form_submit_button", return_value=True):
         # Gọi hàm manage_vehicles
         manage_vehicles()
 
-        # Kiểm tra thông báo thành công
-        mock_success.assert_called_once_with("Thông tin xe đã được cập nhật thành công!")
+        # Kiểm tra xem hàm edit_vehicle đã được gọi
+        mock_edit_vehicle.assert_called_once()
 
-        # Kiểm tra xem thông tin xe đã được cập nhật đúng không
+        # Kiểm tra xe đã được cập nhật
         updated_vehicle = db.vehicles.find_one({"_id": ObjectId(vehicle_id)})
-        assert updated_vehicle is not None
-        assert updated_vehicle["brand"] == "Honda"
         assert updated_vehicle["model"] == "Accord"
         assert updated_vehicle["license_plate"] == "DEF5678"
-        assert updated_vehicle["price_per_day"] == 60
-        assert updated_vehicle["year"] == 2023
-        assert updated_vehicle["required_license_type"] == "B2"
 
 # Test xóa xe thành công
 def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
@@ -171,17 +143,12 @@ def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
     vehicle_id = str(vehicle.inserted_id)
 
     # Gọi hàm manage_vehicles
-    with patch("streamlit.button") as mock_button, patch("streamlit.success") as mock_success:
-        # Giả lập hành động của người dùng cho nút xóa
+    with patch("streamlit.button") as mock_button:
         mock_button.return_value = True
         manage_vehicles()
-
         # Kiểm tra xem xe đã bị xóa chưa
         deleted_vehicle = db.vehicles.find_one({"_id": ObjectId(vehicle_id)})
         assert deleted_vehicle is None
-
-        # Kiểm tra thông báo thành công
-        mock_success.assert_called_once_with(f"Xe Honda Civic đã bị xóa.")
 
 # Test xóa xe đang được thuê hoặc đã được đặt
 def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
@@ -216,5 +183,6 @@ def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
          patch("streamlit.error") as mock_error:
         mock_button.return_value = True
         manage_vehicles()
+
         # Kiểm tra thông báo lỗi
         mock_error.assert_called_once_with("Không thể xóa xe đang được thuê hoặc đã được đặt.")

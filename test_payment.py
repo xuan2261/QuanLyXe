@@ -7,18 +7,18 @@ import os
 from bson.objectid import ObjectId
 import mongomock
 
-# Thay thế MongoClient bằng mongomock.MongoClient
-@pytest.fixture(scope="module", autouse=True)
-def setup_test_environment():
+# Thay thế MongoClient bằng mongomock.MongoClient ở mức function
+@pytest.fixture(autouse=True)
+def setup_test_environment(monkeypatch):
     # Sử dụng mongomock.MongoClient thay cho MongoClient
-    with patch('pymongo.MongoClient', new=mongomock.MongoClient):
-        # Nếu bạn không dùng MongoDB Atlas, hãy thay đổi connection string cho phù hợp
-        os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017" # Thay đổi connection string
-        yield
+    monkeypatch.setattr("pymongo.MongoClient", mongomock.MongoClient)
+    # Nếu bạn không dùng MongoDB Atlas, hãy thay đổi connection string cho phù hợp
+    os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017" # Thay đổi connection string
+    yield
 
 # Loại bỏ mock_objectid fixture
 
-def test_process_simulated_payment_successful(setup_test_environment):
+def test_process_simulated_payment_successful():
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -43,7 +43,7 @@ def test_process_simulated_payment_successful(setup_test_environment):
 
     # Không cần xóa thẻ vì dùng mongomock
 
-def test_process_simulated_payment_insufficient_funds(setup_test_environment):
+def test_process_simulated_payment_insufficient_funds():
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -67,13 +67,13 @@ def test_process_simulated_payment_insufficient_funds(setup_test_environment):
 
     # Không cần xóa thẻ vì dùng mongomock
 
-def test_process_simulated_payment_card_not_found(setup_test_environment):
+def test_process_simulated_payment_card_not_found():
     result = process_simulated_payment("9999999999999999", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Thẻ không tồn tại"
 
-def test_process_simulated_payment_account_locked(setup_test_environment):
+def test_process_simulated_payment_account_locked():
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -93,7 +93,7 @@ def test_process_simulated_payment_account_locked(setup_test_environment):
 
     # Không cần xóa thẻ vì dùng mongomock
 
-def test_process_simulated_payment_card_expired(setup_test_environment):
+def test_process_simulated_payment_card_expired():
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({

@@ -7,17 +7,17 @@ import datetime
 import mongomock
 
 # Thiết lập biến môi trường cho test
-@pytest.fixture(scope="module", autouse=True)
-def setup_test_environment():
+@pytest.fixture(autouse=True)
+def setup_test_environment(monkeypatch):
     # Sử dụng mongomock.MongoClient thay cho MongoClient
-    with patch('pymongo.MongoClient', new=mongomock.MongoClient):
-        os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017" # Thay thế bằng connection string của MongoDB test
-        yield
+    monkeypatch.setattr("pymongo.MongoClient", mongomock.MongoClient)
+    os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017" # Thay thế bằng connection string của MongoDB test
+    yield
 
 # Loại bỏ mock_objectid fixture
 
 # Test hàm manage_vehicles
-def test_manage_vehicles_add_vehicle_success(setup_test_environment):
+def test_manage_vehicles_add_vehicle_success():
     with patch("streamlit.text_input") as mock_text_input, patch(
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
@@ -41,7 +41,7 @@ def test_manage_vehicles_add_vehicle_success(setup_test_environment):
 
         # Không cần xóa xe vì dùng mongomock
 
-def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
+def test_manage_vehicles_add_vehicle_duplicate_license():
     with patch("streamlit.text_input") as mock_text_input, patch(
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
@@ -76,7 +76,7 @@ def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
 
         # Không cần xóa xe vì dùng mongomock
 
-def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
+def test_manage_vehicles_edit_vehicle_success():
     with patch("streamlit.text_input") as mock_text_input, patch(
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
@@ -126,7 +126,7 @@ def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
 
         # Không cần xóa xe vì dùng mongomock
 
-def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
+def test_manage_vehicles_delete_vehicle_success():
     with patch("streamlit.button") as mock_button, patch("streamlit.success") as mock_success:
         # Thêm một xe vào database
         vehicle = db.vehicles.insert_one(
@@ -158,7 +158,7 @@ def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
 
         # Không cần xóa xe vì dùng mongomock
 
-def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
+def test_manage_vehicles_delete_vehicle_rented():
     with patch("streamlit.button") as mock_button, patch("streamlit.error") as mock_error:
         # Thêm một xe vào database
         vehicle = db.vehicles.insert_one(

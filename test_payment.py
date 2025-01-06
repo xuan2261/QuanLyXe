@@ -5,29 +5,20 @@ from datetime import datetime
 from unittest.mock import patch
 import os
 from bson.objectid import ObjectId
+import mongomock
 
-# Thiết lập biến môi trường cho test
+# Thay thế MongoClient bằng mongomock.MongoClient
 @pytest.fixture(scope="module", autouse=True)
 def setup_test_environment():
-    # Nếu bạn không dùng MongoDB Atlas, hãy thay đổi connection string cho phù hợp
-    os.environ["MONGODB_CONNECTION_STRING"] = os.environ.get("MONGODB_CONNECTION_STRING")
+    # Sử dụng mongomock.MongoClient thay cho MongoClient
+    with patch('pymongo.MongoClient', new=mongomock.MongoClient):
+        # Nếu bạn không dùng MongoDB Atlas, hãy thay đổi connection string cho phù hợp
+        os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017" # Thay đổi connection string
+        yield
 
-# Mock ObjectId để tránh lỗi khi so sánh
-@pytest.fixture(autouse=True)
-def mock_objectid(monkeypatch):
-    class MockObjectId:
-        def __init__(self, id_str=None):
-            self._id_str = id_str or "5f8d04b96f17d6957f47a3f5"  # Giá trị ObjectId giả định
+# Loại bỏ mock_objectid fixture
 
-        def __str__(self):
-            return self._id_str
-
-        def __eq__(self, other):
-            return isinstance(other, MockObjectId) and str(self) == str(other)
-
-    monkeypatch.setattr("bson.objectid.ObjectId", MockObjectId)
-
-def test_process_simulated_payment_successful(mock_objectid, setup_test_environment):
+def test_process_simulated_payment_successful(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -40,7 +31,7 @@ def test_process_simulated_payment_successful(mock_objectid, setup_test_environm
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
 
     assert result["status"] == "success"
     assert result["message"] == "Thanh toán thành công"
@@ -53,7 +44,7 @@ def test_process_simulated_payment_successful(mock_objectid, setup_test_environm
     # Xóa thẻ đã tạo
     payment_cards.delete_one({"card_number": "1234567890123456"})
 
-def test_process_simulated_payment_insufficient_funds(mock_objectid, setup_test_environment):
+def test_process_simulated_payment_insufficient_funds(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -66,7 +57,7 @@ def test_process_simulated_payment_insufficient_funds(mock_objectid, setup_test_
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Không đủ số dư"
@@ -78,13 +69,13 @@ def test_process_simulated_payment_insufficient_funds(mock_objectid, setup_test_
     # Xóa thẻ đã tạo
     payment_cards.delete_one({"card_number": "1234567890123456"})
 
-def test_process_simulated_payment_card_not_found(mock_objectid, setup_test_environment):
-    result = process_simulated_payment("9999999999999999", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
+def test_process_simulated_payment_card_not_found(setup_test_environment):
+    result = process_simulated_payment("9999999999999999", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Thẻ không tồn tại"
 
-def test_process_simulated_payment_account_locked(mock_objectid, setup_test_environment):
+def test_process_simulated_payment_account_locked(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -97,7 +88,7 @@ def test_process_simulated_payment_account_locked(mock_objectid, setup_test_envi
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Tài khoản bị khóa"
@@ -105,7 +96,7 @@ def test_process_simulated_payment_account_locked(mock_objectid, setup_test_envi
     # Xóa thẻ đã tạo
     payment_cards.delete_one({"card_number": "1234567890123456"})
 
-def test_process_simulated_payment_card_expired(mock_objectid, setup_test_environment):
+def test_process_simulated_payment_card_expired(setup_test_environment):
     # Tạo một thẻ thanh toán giả lập trong database
     payment_cards = db['payment_cards']
     payment_cards.insert_one({
@@ -118,7 +109,7 @@ def test_process_simulated_payment_card_expired(mock_objectid, setup_test_enviro
         "payment_date": None
     })
 
-    result = process_simulated_payment("1234567890123456", 100.0, ObjectId("5f8d04b96f17d6957f47a3f5"))
+    result = process_simulated_payment("1234567890123456", 100.0, ObjectId())
 
     assert result["status"] == "failed"
     assert result["message"] == "Thẻ đã hết hạn"

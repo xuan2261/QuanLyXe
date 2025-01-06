@@ -4,29 +4,20 @@ from unittest.mock import patch
 from bson import ObjectId
 import os
 import datetime
-
-# Mock ObjectId để tránh lỗi khi so sánh
-@pytest.fixture(autouse=True)
-def mock_objectid(monkeypatch):
-    class MockObjectId:
-        def __init__(self, id_str=None):
-            self._id_str = id_str or "5f8d04b96f17d6957f47a3f5"  # Giá trị ObjectId giả định
-
-        def __str__(self):
-            return self._id_str
-
-        def __eq__(self, other):
-            return isinstance(other, MockObjectId) and str(self) == str(other)
-
-    monkeypatch.setattr("bson.objectid.ObjectId", MockObjectId)
+import mongomock
 
 # Thiết lập biến môi trường cho test
 @pytest.fixture(scope="module", autouse=True)
 def setup_test_environment():
-    os.environ["MONGODB_CONNECTION_STRING"] = os.environ.get("MONGODB_CONNECTION_STRING") # Thay thế bằng connection string của MongoDB test
+    # Sử dụng mongomock.MongoClient thay cho MongoClient
+    with patch('pymongo.MongoClient', new=mongomock.MongoClient):
+        os.environ["MONGODB_CONNECTION_STRING"] = "mongodb://localhost:27017" # Thay thế bằng connection string của MongoDB test
+        yield
+
+# Loại bỏ mock_objectid fixture
 
 # Test hàm manage_vehicles
-def test_manage_vehicles_add_vehicle_success(mock_objectid, setup_test_environment):
+def test_manage_vehicles_add_vehicle_success(setup_test_environment):
     with patch("streamlit.text_input") as mock_text_input, patch(
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
@@ -51,7 +42,7 @@ def test_manage_vehicles_add_vehicle_success(mock_objectid, setup_test_environme
         # Xóa xe đã thêm sau khi test
         db.vehicles.delete_one({"license_plate": "ABC1234"})
 
-def test_manage_vehicles_add_vehicle_duplicate_license(mock_objectid, setup_test_environment):
+def test_manage_vehicles_add_vehicle_duplicate_license(setup_test_environment):
     with patch("streamlit.text_input") as mock_text_input, patch(
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
@@ -87,7 +78,7 @@ def test_manage_vehicles_add_vehicle_duplicate_license(mock_objectid, setup_test
         # Xóa xe đã thêm sau khi test
         db.vehicles.delete_one({"license_plate": "ABC1234"})
 
-def test_manage_vehicles_edit_vehicle_success(mock_objectid, setup_test_environment):
+def test_manage_vehicles_edit_vehicle_success(setup_test_environment):
     with patch("streamlit.text_input") as mock_text_input, patch(
         "streamlit.number_input"
     ) as mock_number_input, patch("streamlit.button") as mock_button, patch(
@@ -138,7 +129,7 @@ def test_manage_vehicles_edit_vehicle_success(mock_objectid, setup_test_environm
         # Xóa xe đã thêm sau khi test
         db.vehicles.delete_one({"_id": ObjectId(vehicle_id)})
 
-def test_manage_vehicles_delete_vehicle_success(mock_objectid, setup_test_environment):
+def test_manage_vehicles_delete_vehicle_success(setup_test_environment):
     with patch("streamlit.button") as mock_button, patch("streamlit.success") as mock_success:
         # Thêm một xe vào database
         vehicle = db.vehicles.insert_one(
@@ -168,7 +159,7 @@ def test_manage_vehicles_delete_vehicle_success(mock_objectid, setup_test_enviro
         # Kiểm tra thông báo thành công
         mock_success.assert_called_once_with(f"Xe Honda Civic đã bị xóa.")
 
-def test_manage_vehicles_delete_vehicle_rented(mock_objectid, setup_test_environment):
+def test_manage_vehicles_delete_vehicle_rented(setup_test_environment):
     with patch("streamlit.button") as mock_button, patch("streamlit.error") as mock_error:
         # Thêm một xe vào database
         vehicle = db.vehicles.insert_one(
@@ -187,7 +178,7 @@ def test_manage_vehicles_delete_vehicle_rented(mock_objectid, setup_test_environ
 
         # Tạo một đơn đặt xe cho xe này
         db.bookings.insert_one({
-            "user_id": ObjectId("5f8d04b96f17d6957f47a3f5"),  # Giả định user_id
+            "user_id": ObjectId(),  # Tạo ObjectId mới
             "vehicle_id": ObjectId(vehicle_id),
             "start_date": "2024-01-01",
             "end_date": "2024-01-05",

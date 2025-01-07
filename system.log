@@ -1790,3 +1790,9 @@ widget you create.
 2025-01-06 20:58:11,145 - local_storage - INFO - Fetched all local vehicles.
 2025-01-06 20:58:11,794 - local_storage - INFO - MongoDB is connected.
 2025-01-06 20:58:11,796 - local_storage - INFO - Fetched all local vehicles.
+2025-01-06 21:08:45,286 - local_storage - INFO - Database initialized successfully.
+2025-01-06 21:08:47,992 - local_storage - INFO - MongoDB is connected.
+2025-01-06 21:08:54,058 - __main__ - INFO - \u0110ã t\u1ea1o b\u1ea3ng payment_cards và thêm d\u1eef li\u1ec7u m\u1eabu.
+2025-01-06 21:08:54,060 - local_storage - INFO - Fetched all local vehicles.
+2025-01-06 21:08:54,483 - local_storage - INFO - MongoDB is connected.
+2025-01-06 21:08:54,601 - local_storage - INFO - Fetched all local vehicles.

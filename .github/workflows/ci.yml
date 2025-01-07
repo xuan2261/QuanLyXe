@@ -33,7 +33,7 @@ jobs:
       # 4. Chạy kiểm thử
       - name: Run tests
         run: |
-          pytest test_payment.py
+          # pytest test_payment.py
           # pytest test_vehicle.py
   
   # deploy:

@@ -18,7 +18,6 @@ class DatabaseMock:
             return self.db[self.temp_mapping[collection_name]]
         return self.db[collection_name]
 
-
 # Fixture setup môi trường test và ánh xạ bảng tạm
 @pytest.fixture(autouse=True)
 def setup_test_environment(monkeypatch):
